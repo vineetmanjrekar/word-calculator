@@ -67,7 +67,7 @@ public class FileDaoTest
 		//given:
 		final FileDocument objectToSave = new FileDocument();
 		objectToSave.setFileId("fileId1");
-		objectToSave.setLines(Lists.newArrayList("it is ", "is a", "a sentence", "sentence it not"));
+		objectToSave.setLines(Lists.newArrayList("it is ", "is a is ", "a sentence", "sentence it not"));
 
 		fileDao.save(objectToSave);
 
@@ -77,6 +77,7 @@ public class FileDaoTest
 		//then:
 		Assert.assertEquals(2, getWordCountFor(wordCounts, "sentence"));
 		Assert.assertEquals(1, getWordCountFor(wordCounts, "not"));
+		Assert.assertEquals(3, getWordCountFor(wordCounts, "is"));
 
 	}
 
