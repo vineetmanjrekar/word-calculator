@@ -18,7 +18,6 @@ public class FileDao extends MongoTemplateDao
 		getMongoTemplate().save(fileDocument);
 	}
 
-	@Autowired
 	public MapReduceResults<WordCount> mapReduce(final String fileId)
 	{
 		String map = "function() { var allLines = this.lines;  if (allLines) { " +
@@ -38,6 +37,7 @@ public class FileDao extends MongoTemplateDao
 				"    return count;\n" +
 				"}";
 
-		return getMongoTemplate().mapReduce(Query.query(Criteria.where("_id").is(fileId)),"fileDocument", map, reduce, WordCount.class);
+		return getMongoTemplate().mapReduce(Query.query(Criteria.where("_id").is(fileId)),
+				"fileDocument", map, reduce, WordCount.class);
 	}
 }

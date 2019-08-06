@@ -1,5 +1,7 @@
 package uk.co.floow.calculator.service;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,5 +35,13 @@ public class WordCalculatorService
 				.collect(Collectors.toSet());
 		this.wordCountDao.save(wordCountSet, fileId);
 
+	}
+
+	public Map<String, Integer> getWordCountsFor(final String fileId)
+	{
+		return this.wordCountDao.findBy(fileId).stream()
+				.flatMap(Collection::stream)
+			//	.collect(Collectors.toSet())
+		.collect(Collectors.groupingBy(WordCount::getId,Collectors.summingInt(WordCount::getValue)));
 	}
 }

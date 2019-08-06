@@ -11,5 +11,4 @@ public class WordCount
 {
 	private String id;
 	private int value;
-
 }
