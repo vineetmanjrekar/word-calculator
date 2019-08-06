@@ -2,6 +2,8 @@ package uk.co.floow.calculator.dao;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import uk.co.floow.calculator.domain.FileDocument;
@@ -22,7 +24,7 @@ public class FileDao
 		mongoTemplate.save(fileDocument);
 	}
 
-	public MapReduceResults<WordCount> mapReduce()
+	public MapReduceResults<WordCount> mapReduce(final String fileId)
 	{
 		String map = "function() { var allLines = this.lines;  if (allLines) { " +
 				"  for (var i = 0; i < allLines.length; i++) {  " +
@@ -41,6 +43,6 @@ public class FileDao
 				"    return count;\n" +
 				"}";
 
-		return mongoTemplate.mapReduce("fileDocument", map, reduce, WordCount.class);
+		return mongoTemplate.mapReduce(Query.query(Criteria.where("_id").is(fileId)),"fileDocument", map, reduce, WordCount.class);
 	}
 }

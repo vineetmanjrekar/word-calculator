@@ -30,8 +30,8 @@ public class FileDaoTest
 	@Before
 	public void setup()
 	{
-		mongoTemplate.remove(FileDocument.class);
-		mongoTemplate.remove(WordCount.class);
+		mongoTemplate.remove(new Query(), FileDocument.class);
+		mongoTemplate.remove(new Query(), WordCount.class);
 	}
 
 	@Test
@@ -66,13 +66,14 @@ public class FileDaoTest
 
 		//given:
 		final FileDocument objectToSave = new FileDocument();
-		objectToSave.setFileId("fileId1");
+		final String fileId = "fileId1";
+		objectToSave.setFileId(fileId);
 		objectToSave.setLines(Lists.newArrayList("it is ", "is a is ", "a sentence", "sentence it not"));
 
 		fileDao.save(objectToSave);
 
 		//when:
-		final MapReduceResults<WordCount> wordCounts = fileDao.mapReduce();
+		final MapReduceResults<WordCount> wordCounts = fileDao.mapReduce(fileId);
 
 		//then:
 		Assert.assertEquals(2, getWordCountFor(wordCounts, "sentence"));
