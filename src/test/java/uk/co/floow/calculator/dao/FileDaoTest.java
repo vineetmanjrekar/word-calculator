@@ -24,7 +24,7 @@ public class FileDaoTest
 {
 	public static final String FILES_DB = "files";
 	private MongoTemplate mongoTemplate = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), FILES_DB));
-	private FileDao fileDao = new FileDao(mongoTemplate);
+	private FileDao fileDao = new FileDao();
 
 
 	@Before

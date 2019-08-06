@@ -1,5 +1,6 @@
 package uk.co.floow.calculator.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,20 +11,14 @@ import uk.co.floow.calculator.domain.FileDocument;
 import uk.co.floow.calculator.domain.WordCount;
 
 @Component
-public class FileDao
+public class FileDao extends MongoTemplateDao
 {
-	private MongoTemplate mongoTemplate;
-
-	public FileDao(final MongoTemplate mongoTemplate)
-	{
-		this.mongoTemplate = mongoTemplate;
-	}
-
 	public void save(FileDocument fileDocument)
 	{
-		mongoTemplate.save(fileDocument);
+		getMongoTemplate().save(fileDocument);
 	}
 
+	@Autowired
 	public MapReduceResults<WordCount> mapReduce(final String fileId)
 	{
 		String map = "function() { var allLines = this.lines;  if (allLines) { " +
@@ -43,6 +38,6 @@ public class FileDao
 				"    return count;\n" +
 				"}";
 
-		return mongoTemplate.mapReduce(Query.query(Criteria.where("_id").is(fileId)),"fileDocument", map, reduce, WordCount.class);
+		return getMongoTemplate().mapReduce(Query.query(Criteria.where("_id").is(fileId)),"fileDocument", map, reduce, WordCount.class);
 	}
 }

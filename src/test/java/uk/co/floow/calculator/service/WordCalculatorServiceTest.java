@@ -24,8 +24,8 @@ public class WordCalculatorServiceTest
 {
 	public static final String FILES_DB = "files";
 	private MongoTemplate mongoTemplate = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), FILES_DB));
-	private FileDao fileDao = new FileDao(mongoTemplate);
-	private WordCountDao wordCountDao = new WordCountDao(mongoTemplate);
+	private FileDao fileDao = new FileDao();
+	private WordCountDao wordCountDao = new WordCountDao();
 	private WordCalculatorService wordCalculatorService = new WordCalculatorService(fileDao, wordCountDao);
 
 
