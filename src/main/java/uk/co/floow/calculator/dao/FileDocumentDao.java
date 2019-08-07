@@ -1,5 +1,8 @@
 package uk.co.floow.calculator.dao;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -14,6 +17,14 @@ public class FileDocumentDao extends MongoTemplateDao
 	public void save(FileDocument fileDocument)
 	{
 		getMongoTemplate().save(fileDocument);
+	}
+
+	public Set<String> findChunkIds(String fileId)
+	{
+		return getMongoTemplate().find(Query.query(Criteria.where("fileId").is(fileId)), FileDocument.class)
+				.stream()
+				.map(FileDocument::getChunkId)
+				.collect(Collectors.toSet());
 	}
 
 	public MapReduceResults<WordCount> mapReduce(final String fileId)

@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import com.mongodb.MongoClient;
 
 import uk.co.floow.calculator.dao.FileDocumentDao;
+import uk.co.floow.calculator.dao.MongoLockDao;
 import uk.co.floow.calculator.dao.WordCountDao;
 import uk.co.floow.calculator.domain.DocumentWordCount;
 import uk.co.floow.calculator.domain.FileDocument;
@@ -24,7 +25,8 @@ public class WordCalculatorServiceTest
 	private MongoTemplate mongoTemplate = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), FILES_DB));
 	private FileDocumentDao fileDao = new FileDocumentDao();
 	private WordCountDao wordCountDao = new WordCountDao();
-	private WordCalculatorService wordCalculatorService = new WordCalculatorService(fileDao, wordCountDao);
+	private MongoLockDao mongoLockDao = new MongoLockDao();
+	private WordCalculatorService wordCalculatorService = new WordCalculatorService(fileDao, wordCountDao, mongoLockDao);
 
 
 	@Before

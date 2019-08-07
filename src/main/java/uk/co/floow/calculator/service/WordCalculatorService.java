@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Streams;
 
 import uk.co.floow.calculator.dao.FileDocumentDao;
+import uk.co.floow.calculator.dao.MongoLockDao;
 import uk.co.floow.calculator.dao.WordCountDao;
 import uk.co.floow.calculator.domain.FileDocument;
 import uk.co.floow.calculator.domain.WordCount;
@@ -25,20 +26,42 @@ public class WordCalculatorService
 
 	private FileDocumentDao fileDao;
 	private WordCountDao wordCountDao;
+	private MongoLockDao mongoLockDao;
 
 	@Autowired
-	public WordCalculatorService(final FileDocumentDao fileDao, final WordCountDao wordCountDao)
+	public WordCalculatorService(final FileDocumentDao fileDao,
+			final WordCountDao wordCountDao, final MongoLockDao mongoLockDao)
 	{
 		this.fileDao = fileDao;
 		this.wordCountDao = wordCountDao;
+		this.mongoLockDao = mongoLockDao;
 	}
 
 	public void calculateWordCount(String fileId) {
+
+//		String chunkId = null;
+//		try
+//		{
+//			final Set<String> chunkIds = this.fileDao.findChunkIds(fileId);
+//			final Set<ChunkStatus> lockedChunks = this.mongoLockDao.findByFileId(fileId);
+//
+//			chunkIds
+//					.stream()
+//					.filter(chunkFromFile ->
+//							lockedChunks.stream()
+//					.filter(chunkStatus -> chunkStatus.getChunkId()!=chunkFromFile))
+//
+//
+
 		final MapReduceResults<WordCount> wordCounts = this.fileDao.mapReduce(fileId);
 		final Set<WordCount> wordCountSet = Streams.stream(wordCounts)
 				.collect(Collectors.toSet());
 		this.wordCountDao.save(wordCountSet, fileId);
-
+//		}
+//		finally
+//		{
+//			this.mongoLockDao.setCompleteStatus(fileId, );
+//		}
 	}
 
 	public Map<String, Integer> getWordCountsFor(final String fileId)

@@ -22,10 +22,10 @@ public class MongoLock
 {
 	@Id
 	private String fileId;
-	private Set<String> chunkId;
+	private Set<ChunkStatus> chunks;
 
 	@Field
-	@Indexed(name="someDateFieldIndex", expireAfterSeconds=10)
+	@Indexed(name="someDateFieldIndex", expireAfterSeconds=300)
 	private Date dateCreated  = new Date();
 
 
