@@ -1,6 +1,8 @@
 package uk.co.floow.calculator.resources;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,28 @@ public class WordCountResource
 		return wordCalculatorService.getWordCountsFor(fileId);
 	}
 
+	@GetMapping("/word/count/{fileId}/{word}")
+	public Integer getWordCountFor(@PathVariable("fileId") String fileId, @PathVariable("word") String word)
+	{
+		return wordCalculatorService.getWordCountsFor(fileId).get(word);
+	}
+
+	@GetMapping("/word/count/max/{fileId}")
+	public Map.Entry<String, Integer> getWordWithMaxCount(@PathVariable("fileId") String fileId)
+	{
+		final Map<String, Integer> countMap = wordCalculatorService.getWordCountsFor(fileId);
+		final Map.Entry<String, Integer> max = Collections.max(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue));
+		return max;
+	}
+
+	@GetMapping("/word/count/min/{fileId}")
+	public Map.Entry<String, Integer> getWordWithMinCount(@PathVariable("fileId") String fileId)
+	{
+		final Map<String, Integer> countMap = wordCalculatorService.getWordCountsFor(fileId);
+		final Map.Entry<String, Integer> min = Collections.min(countMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue));
+		return min;
+	}
+
 	@PostMapping("/process/word/count/{fileId}")
 	public void startWordCountFor(@PathVariable("fileId") String fileId)
 	{
@@ -39,7 +63,6 @@ public class WordCountResource
 			@RequestParam("file") MultipartFile file) throws IOException
 	{
 		wordCalculatorService.uploadFile(fileId, file);
-
 	}
 
 }
