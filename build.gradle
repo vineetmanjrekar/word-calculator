@@ -8,6 +8,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -25,6 +26,11 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+sourceSets.main.java.srcDirs = ['src/main/java']
+
+application {
+    mainClassName = 'uk.co.floow.calculator.WordApplication'
+}
 dependencies {
 
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'

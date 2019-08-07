@@ -41,7 +41,6 @@ public class WordCalculatorService
 	{
 		return this.wordCountDao.findBy(fileId).stream()
 				.flatMap(Collection::stream)
-			//	.collect(Collectors.toSet())
-		.collect(Collectors.groupingBy(WordCount::getId,Collectors.summingInt(WordCount::getValue)));
+				.collect(Collectors.groupingBy(WordCount::getId,Collectors.summingInt(WordCount::getValue)));
 	}
 }

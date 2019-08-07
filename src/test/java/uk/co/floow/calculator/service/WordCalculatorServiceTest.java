@@ -2,8 +2,9 @@ package uk.co.floow.calculator.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,11 +19,10 @@ import uk.co.floow.calculator.dao.FileDao;
 import uk.co.floow.calculator.dao.WordCountDao;
 import uk.co.floow.calculator.domain.DocumentWordCount;
 import uk.co.floow.calculator.domain.FileDocument;
-import uk.co.floow.calculator.domain.WordCount;
 
 public class WordCalculatorServiceTest
 {
-	public static final String FILES_DB = "files";
+	private static final String FILES_DB = "files";
 	private MongoTemplate mongoTemplate = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), FILES_DB));
 	private FileDao fileDao = new FileDao();
 	private WordCountDao wordCountDao = new WordCountDao();
@@ -49,10 +49,8 @@ public class WordCalculatorServiceTest
 		wordCalculatorService.calculateWordCount(fileId);
 
 		//then:
-		final Set<Set<WordCount>> wordCounts = wordCountDao.findBy(fileId);
-		assertEquals(4, wordCounts.stream().flatMap(Set::stream).collect(Collectors.toSet()).size());
-
-
+		final Map<String, Integer> wordCounts = wordCalculatorService.getWordCountsFor(fileId);
+		assertEquals(4, wordCounts.size());
 	}
 
 }
