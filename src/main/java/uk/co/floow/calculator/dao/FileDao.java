@@ -1,7 +1,5 @@
 package uk.co.floow.calculator.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -37,7 +35,7 @@ public class FileDao extends MongoTemplateDao
 				"    return count;\n" +
 				"}";
 
-		return getMongoTemplate().mapReduce(Query.query(Criteria.where("_id").is(fileId)),
+		return getMongoTemplate().mapReduce(Query.query(Criteria.where("fileId").is(fileId)),
 				"fileDocument", map, reduce, WordCount.class);
 	}
 }
