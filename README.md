@@ -14,5 +14,6 @@ Please go into the unzipped folder and under bin run "./word-calculator" to get 
 
 The App has exposed several endpoints to get results.
 
-1. /word-calculator/word/count/{fileId}   [GET] ---> To get word counts in file with Id {fieldId}
-2. /word-calculator/process/word/count/{fileId} [POST] --> To start processing the file with Id {fieldId} to start counting the words.
+1. /word-calculator/file/upload/{fileId} [POST] --> To upload the file. Use key "file" to upload file.
+2. /word-calculator/word/count/{fileId}   [GET] ---> To get word counts in file with Id {fieldId}
+3. /word-calculator/process/word/count/{fileId} [POST] --> To start processing the file with Id {fieldId} to start counting the words.
