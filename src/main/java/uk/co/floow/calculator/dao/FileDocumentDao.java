@@ -9,7 +9,7 @@ import uk.co.floow.calculator.domain.FileDocument;
 import uk.co.floow.calculator.domain.WordCount;
 
 @Component
-public class FileDao extends MongoTemplateDao
+public class FileDocumentDao extends MongoTemplateDao
 {
 	public void save(FileDocument fileDocument)
 	{

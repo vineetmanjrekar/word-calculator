@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Streams;
 
-import uk.co.floow.calculator.dao.FileDao;
+import uk.co.floow.calculator.dao.FileDocumentDao;
 import uk.co.floow.calculator.dao.WordCountDao;
 import uk.co.floow.calculator.domain.FileDocument;
 import uk.co.floow.calculator.domain.WordCount;
@@ -23,11 +23,11 @@ import uk.co.floow.calculator.domain.WordCount;
 public class WordCalculatorService
 {
 
-	private FileDao fileDao;
+	private FileDocumentDao fileDao;
 	private WordCountDao wordCountDao;
 
 	@Autowired
-	public WordCalculatorService(final FileDao fileDao, final WordCountDao wordCountDao)
+	public WordCalculatorService(final FileDocumentDao fileDao, final WordCountDao wordCountDao)
 	{
 		this.fileDao = fileDao;
 		this.wordCountDao = wordCountDao;

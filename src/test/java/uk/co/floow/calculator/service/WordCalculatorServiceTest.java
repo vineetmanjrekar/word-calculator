@@ -2,9 +2,7 @@ package uk.co.floow.calculator.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +13,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.google.common.collect.Lists;
 import com.mongodb.MongoClient;
 
-import uk.co.floow.calculator.dao.FileDao;
+import uk.co.floow.calculator.dao.FileDocumentDao;
 import uk.co.floow.calculator.dao.WordCountDao;
 import uk.co.floow.calculator.domain.DocumentWordCount;
 import uk.co.floow.calculator.domain.FileDocument;
@@ -24,7 +22,7 @@ public class WordCalculatorServiceTest
 {
 	private static final String FILES_DB = "files";
 	private MongoTemplate mongoTemplate = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), FILES_DB));
-	private FileDao fileDao = new FileDao();
+	private FileDocumentDao fileDao = new FileDocumentDao();
 	private WordCountDao wordCountDao = new WordCountDao();
 	private WordCalculatorService wordCalculatorService = new WordCalculatorService(fileDao, wordCountDao);
 
