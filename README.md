@@ -44,7 +44,7 @@ The App has exposed several API endpoints for App Usage.
 
 ##### File Uploader
 
-The API (1) uploads the file into Mongo Database in chunks of 10MB each. The maximum file size supported currently is 1.28GB.
+The API (1) uploads the file into Mongo Database in chunks of 10MB each. The maximum file size supported currently is 1.28GB. To change the file limit allowed for upload, please update the properties "spring.servlet.multipart.max-file-size" and "spring.servlet.multipart.max-request-siz" in application.properties.
 The maximum size of a Mongo Collection allowed and result processing size allowed in MapReduce is 16MB. Hence chunk size is 10MB. This is currently hard coded but can be externalised.
 
 ##### Word Processor
