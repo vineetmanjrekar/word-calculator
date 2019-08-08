@@ -61,6 +61,8 @@ The other APIs do read only from "wordCount" collection that gives back results 
 The idea is to introduce a  MongoLock collection, that holds the {fileId -> [{chunkId1: true/false}, {chunkId2: true/false}]} object when any thread tries to access the chunk and run a MapReduce on it. Once the MapReduce is complete, we then update the chunkId status to true. Hence any incoming thread that figures out that a chunkId doesnt exist in this collection, it means that the chunk is not analysed and can be picked for mapReduce. The object with false status, states that the chunk is currently under MapReduce. 
 In this way, we always ensure that a given chunk is always analysed by seperate threads and also not calculated in a duplicate manner.
 
+The reason for using MongoLock collection is that from the newer versions of Mongo, we have a document level lock when updating, hence only one thread can update on a given chunkId. If we were to use WiredTiger, then we would have  a collection level lock, achieving an even higher level of locking.
+
 
 ## Limitations/ Things TO DO
 
