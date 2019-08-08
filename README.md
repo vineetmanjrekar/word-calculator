@@ -56,6 +56,11 @@ The API (2) runs the MapReduce on the documents matching the FileID. Currently i
 
 The other APIs do read only from "wordCount" collection that gives back results based on fileID and/or word in a file.
 
+#### Multi Threading Implementation (TODO)
+
+The idea is to introduce a  MongoLock collection, that holds the {fileId -> [{chunkId1: true/false}, {chunkId2: true/false}]} object when any thread tries to access the chunk and run a MapReduce on it. Once the MapReduce is complete, we then update the chunkId status to true. Hence any incoming thread that figures out that a chunkId doesnt exist in this collection, it means that the chunk is not analysed and can be picked for mapReduce. The object with false status, states that the chunk is currently under MapReduce. 
+In this way, we always ensure that a given chunk is always analysed by seperate threads and also not calculated in a duplicate manner.
+
 
 ## Limitations/ Things TO DO
 
